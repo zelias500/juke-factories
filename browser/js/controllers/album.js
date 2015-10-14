@@ -28,8 +28,8 @@ app.controller('AlbumCtrl', function ($scope, $http, $rootScope, StatsFactory) {
 	});
 
 	$scope.figureOutTime = function(time){
-		var hrs = Math.floor(time/60);
-		var mins = Math.floor(time%60);
-		return hrs+"h "+mins+"min"
+		var mins = Math.floor(time/60);
+		var secs = Math.floor(time%60);
+		return mins+"min "+secs+"sec"
 	}	
 });
