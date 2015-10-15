@@ -1,4 +1,4 @@
-app.factory("AlbumFactory", function($http){
+app.factory("AlbumFactory", function($http, SongFactory){
 	var imgUrl = function(albums){
 			albums.forEach(function(album) {
 					album.imageUrl = '/api/albums/' + album._id + '.image';
@@ -20,13 +20,8 @@ app.factory("AlbumFactory", function($http){
 			.then(function (response) {
 				var album = response.data;
 				album.imageUrl = imgUrl([album])[0].imageUrl;
-				var albumArtists = _.indexBy(album.artists, '_id');
-				album.songs.forEach(function (s) {
-					s.audioUrl = '/api/songs/' + s._id + '.audio';
-					s.artists = s.artists.map(function (artistId) {
-						return albumArtists[artistId];
-					});
-				});
+				album = SongFactory.populateSongArtists(album);
+				album.songs = SongFactory.populateSongAudio(album.songs);
 				return album;
 			}).catch(function(err){console.err(err.message)});
 		},
@@ -34,6 +29,5 @@ app.factory("AlbumFactory", function($http){
 		getImgUrl: function(albums){
 			return imgUrl(albums);
 		}
-
 	}
 })

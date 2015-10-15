@@ -1,5 +1,5 @@
 var theArtist;
-app.factory("ArtistFactory", function($http, AlbumFactory){
+app.factory("ArtistFactory", function($http, AlbumFactory, SongFactory){
 
 	return {
 
@@ -30,10 +30,7 @@ app.factory("ArtistFactory", function($http, AlbumFactory){
 				return response.data
 			})
 			.then(function(songs) {
-				songs.forEach(function(song) {
-					song.audioUrl = '/api/songs/' + song._id + '.audio';
-				})
-				theArtist.songs = songs;
+				theArtist.songs = SongFactory.populateSongAudio(songs);
 			})
 			.then(function(){
 				return theArtist;
