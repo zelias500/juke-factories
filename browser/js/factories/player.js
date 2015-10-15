@@ -17,6 +17,7 @@ app.factory('PlayerFactory', function ($rootScope) {
 			index += songs.length
 			index %= songs.length;
 			player.start(songs[index], songs);
+			$rootScope.$broadcast('song change')
 		}
 	player = {
 		start: function(song, songList){

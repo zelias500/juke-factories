@@ -1,12 +1,16 @@
-app.controller('multipleAlbums', function($scope, $http, $rootScope){
-	$http.get("/api/albums").then(function(response){
-		return response.data;
-	}).then(function(albums){
-		albums.forEach(function(album){
-			album.imageUrl = "api/albums/"+album._id+".image"
-		})
-		$scope.albums = albums
-	}).catch(function(e){console.error(e.message)})
+app.controller('multipleAlbums', function($scope, AlbumFactory, $rootScope){
+	// $http.get("/api/albums").then(function(response){
+	// 	return response.data;
+	// }).then(function(albums){
+	// 	albums.forEach(function(album){
+	// 		album.imageUrl = "api/albums/"+album._id+".image"
+	// 	})
+	// 	$scope.albums = albums
+	// }).catch(function(e){console.error(e.message)})
+
+	AlbumFactory.fetchAll().then(function(albums){
+		$scope.albums = albums;
+	})
 
 	$rootScope.showAlbums = true;
 

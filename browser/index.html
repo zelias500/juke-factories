@@ -14,6 +14,8 @@
 	<script src="/js/controllers/multipleAlbums.js"></script>
 	<script src="/js/controllers/artists.js"></script>
 	<script src="/js/factories/statsFactory.js"></script>
+	<script src="/js/factories/AlbumFactory.js"></script>
+	<script src="/js/factories/ArtistFactory.js"></script>
 	<script src="/js/factories/player.js"></script>
 </head>
 <body ng-app="juke">
@@ -22,12 +24,12 @@
 		<div class="col-xs-2">
 			<sidebar ng-controller="sidebar">
 				<section>
-					<h5 class="playlist-item active">
+					<h5 class="playlist-item" ng-class="{active: !showArtists}">
 						<a ng-click="viewAlbums()" href="#">ALBUMS</a>
 					</h5>
 				</section>
 				<section>
-				    <h5 class="playlist-item">
+				    <h5 class="playlist-item" ng-class="{active: showArtists}">
 				        <a ng-click="viewAllArtists()" href="#">ARTISTS</a>
 				    </h5>
 				</section>
@@ -45,7 +47,7 @@
 				    </div>
 				</div>
 			    <div ng-show="viewOneArtist">
-				    <h3>_artist_name_</h3>
+				    <h3>{{artist.name}}</h3>
 				    <h3>Albums</h3>
 					    <div class="row">
 					        <div class="col-xs-4" ng-repeat="album in artist.albums">
@@ -85,6 +87,7 @@
 					</table>
 				</div>
 			</div>
+			<div ng-hide="showArtists">
 			<div ng-show="showAlbums" ng-controller="multipleAlbums">
 			    <h3>Albums</h3>
 			    <div class="row">
@@ -131,6 +134,7 @@
 				</table>
 			</div>
 		</div>
+	</div>
 
 		<footer>
 			<div ng-controller="PlayerCtrl" ng-show="currentSong">
